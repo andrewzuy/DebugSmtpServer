@@ -11,11 +11,8 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
-        #emailStorage.append("\n=============================================================")
-        msg = email.message_from_bytes(data)
-        emailStorage.append("\r\n ".join(msg.keys()))
-        emailStorage.append("\r\n ".join(msg.values()))
+        emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
+
 
 app = Flask(__name__)
 app.debug = False
