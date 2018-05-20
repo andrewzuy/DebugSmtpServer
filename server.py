@@ -12,7 +12,13 @@ class CustomSMTPServer(smtpd.SMTPServer):
         print(data)
         msg = email.message_from_bytes(data)
         #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
-        emailStorage.append(msg.get_payload(i=None, decode=False))
+        if msg.is_multipart():
+            for payload in msg.get_payload():
+                # if payload.is_multipart(): ...
+                emailStorage.append(payload.get_payload())
+        else:
+            emailStorage.append(msg.get_payload())
+
 
 app = Flask(__name__)
 app.debug = False
