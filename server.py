@@ -17,7 +17,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
         parsed =""
         for part in msg.walk():
             if "multipart" not in part.get_content_type():
-                parsed+=part.get_payload()
+                parsed+=part.as_string()
         emailStorage.append(parsed)
 
 app = Flask(__name__)
