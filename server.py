@@ -1,3 +1,4 @@
+
 from flask import Flask
 import smtpd
 import asyncore
@@ -10,20 +11,19 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        msg = email.message_from_bytes(data)
         #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
-        for part in msg.walk():
-            print(part.get_content_type())
-            emailStorage.append(part.get_body('html'))
+        #emailStorage.append("\n=============================================================")
+        msg = email.message_from_bytes(data)
+        emailStorage.append(msg.get_payload(i=None, decode=False))
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 
 @app.route("/")
 def hello():
-    result = "<html><h1>Debugging email server</h1>"
+    result = "<html><h1>Debugging Email server</h1>"
     for data in emailStorage:
-        result += "<hr>" + str(data)
+        result += "<hr><br>" + data
     return result + "</html>"
 
 def run_http():
