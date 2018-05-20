@@ -2,6 +2,7 @@ from flask import Flask
 import smtpd
 import asyncore
 import threading
+import email
 
 emailStorage = []
 
@@ -9,8 +10,9 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
-        emailStorage.append("\n=============================================================")
+        msg = email.message_from_bytes(data)
+        #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
+        emailStorage.append(msg.get_payload(i=None, decode=False))
 
 app = Flask(__name__)
 app.debug = False
