@@ -14,7 +14,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
         #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
         #emailStorage.append("\n=============================================================")
         msg = email.message_from_bytes(data)
-        emailStorage.append(msg.as_string())
+        emailStorage.append("".join(msg.keys()))
 
 app = Flask(__name__)
 app.debug = False
