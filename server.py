@@ -11,13 +11,8 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        filter = re.compile("(?=From:).*")
         message = data.decode("utf-8").replace('=3D','=').replace('=\n','\n').replace('&amp;','&')
-        filtered_message = filter.match(message)
-        if len(filtered_message)>0:
-            emailStorage.append(filtered_message)
-        else:
-            emailStorage.append(message)
+        emailStorage.append(message)
 
 
 app = Flask(__name__)
