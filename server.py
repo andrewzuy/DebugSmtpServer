@@ -12,22 +12,18 @@ class CustomSMTPServer(smtpd.SMTPServer):
         print(data)
         msg = email.message_from_bytes(data)
         #emailStorage.append(str(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&'))
-        if msg.is_multipart():
-            for payload in msg.get_payload():
-                # if payload.is_multipart(): ...
-                emailStorage.append(payload.get_payload())
-        else:
-            emailStorage.append(msg.get_payload())
-
+        for part in msg.walk():
+            print(part.get_content_type())
+            emailStorage.append(part.get_body('html'))
 
 app = Flask(__name__)
-app.debug = False
+app.debug = True
 
 @app.route("/")
 def hello():
     result = "<html><h1>Debugging email server</h1>"
     for data in emailStorage:
-        result += "<hr>" + data
+        result += "<hr>" + str(data)
     return result + "</html>"
 
 def run_http():
