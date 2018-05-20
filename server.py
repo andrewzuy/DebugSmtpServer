@@ -17,10 +17,10 @@ app.debug = False
 
 @app.route("/")
 def hello():
-    result = "============================================================="
+    result = "<html><h1>Debugging email server</h1>"
     for data in emailStorage:
-        result += "\n" + data
-    return result
+        result += "<hr>" + data
+    return result + "</html>"
 
 def run_http():
     print("running")
