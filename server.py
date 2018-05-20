@@ -13,8 +13,9 @@ class CustomSMTPServer(smtpd.SMTPServer):
         print(data)
         filter = re.compile("(?=From:).*")
         message = data.decode("utf-8").replace('=3D','=').replace('=\n','\n').replace('&amp;','&')
-        if filter.match(message)!=None:
-            emailStorage.append(filter.match(message))
+        filtered_message = filter.match(message)
+        if len(filtered_message)>0:
+            emailStorage.append(filtered_message)
         else:
             emailStorage.append(message)
 
