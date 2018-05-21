@@ -29,7 +29,7 @@ def print_emails():
 @app.route("/")
 def clear_emails():
     del emailStorage[:]
-    return "<html><h1>All emails were cleared</h1><br><h2><a href="http://uscourt.ga">Back to emails</a></h2></html>"
+    return "<html><h1>All emails were cleared</h1><br><h2><a href=\"http://uscourt.ga\">Back to emails</a></h2></html>"
 
 def run_http():
     print("running")
