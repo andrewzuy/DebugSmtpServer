@@ -26,7 +26,7 @@ def print_emails():
         result += "<hr><br>" + data
     return result + "</html>"
 
-@app.route("/")
+@app.route("/clear")
 def clear_emails():
     del emailStorage[:]
     return "<html><h1>All emails were cleared</h1><br><h2><a href=\"http://uscourt.ga\">Back to emails</a></h2></html>"
