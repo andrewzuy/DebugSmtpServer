@@ -20,11 +20,16 @@ app = Flask(__name__)
 app.debug = False
 
 @app.route("/")
-def hello():
+def print_emails():
     result = "<html><h1>Debugging Email server</h1>"
     for data in emailStorage:
         result += "<hr><br>" + data
     return result + "</html>"
+
+@app.route("/")
+def clear_emails():
+    del emailStorage[:]
+    return "<html><h1>All emails were cleared</h1><br><h2><a href="http://uscourt.ga">Back to emails</a></h2></html>"
 
 def run_http():
     print("running")
