@@ -12,7 +12,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        message = data.decode("utf8").replace('=3D','=').replace('=\n','').replace('&amp;','&')
+        message = data.decode("utf8").replace('=3D','=').replace('=\n','').replace('&amp;','&').replace('=0D','\r').replace('=0A','\n')
         emailStorage.append(message)
 
 
