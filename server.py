@@ -4,6 +4,7 @@ import smtpd
 import asyncore
 import threading
 import re
+import email
 
 emailStorage = []
 
@@ -11,7 +12,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
     def process_message(self, peer, mailfrom, rcpttos, data, decode_data=True, **kwargs):
         print(data)
-        message = data.decode("utf-8").replace('=3D','=').replace('=\n','\n').replace('&amp;','&')
+        message = email.message.message_from_bytes(data).replace('=3D','=').replace('=\n','\n').replace('&amp;','&')
         emailStorage.append(message)
 
 
